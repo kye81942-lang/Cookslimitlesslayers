@@ -4,7 +4,548 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cook's Limitless Layers</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #050505 100%);
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Logo Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/logo-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            filter: brightness(0.8) contrast(1.2);
+        }
+
+        /* Animated glow overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(0, 153, 204, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 1.3;
+            }
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 217, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #00d9ff;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+            animation: headerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(0, 217, 255, 0.6);
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d9ff;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        nav a:hover {
+            color: #00d9ff;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.85) 0%, rgba(26, 26, 26, 0.85) 100%);
+            border-bottom: 3px solid #00d9ff;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 153, 204, 0.2) 0%, transparent 70%);
+            animation: heroGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes heroGlow {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00d9ff;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(0, 217, 255, 0.5), 0 0 60px rgba(0, 153, 204, 0.3);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(0, 217, 255, 0.5), 0 0 60px rgba(0, 153, 204, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(0, 217, 255, 0.7), 0 0 80px rgba(0, 153, 204, 0.5);
+            }
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #ccc;
+            letter-spacing: 1px;
+        }
+
+        /* Buttons */
+        .cta-button {
+            background: #00d9ff;
+            color: black;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-button:hover {
+            background: #00b8cc;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 40px;
+            background: rgba(10, 10, 10, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #00d9ff;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .product-card:hover {
+            border-color: #00d9ff;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3), inset 0 0 20px rgba(0, 217, 255, 0.1);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+            color: black;
+            border-radius: 0;
+            margin: 0;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 0 25px rgba(0, 217, 255, 0.3);
+            position: relative;
+            z-index: 2;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .product-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            z-index: 3;
+            position: relative;
+        }
+
+        .product-card h3 {
+            color: #00d9ff;
+            margin-bottom: 15px;
+            font-size: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-card p {
+            color: #aaa;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            flex-grow: 1;
+        }
+
+        .explore-btn {
+            background: transparent;
+            color: #00d9ff;
+            padding: 10px 25px;
+            border: 2px solid #00d9ff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+            align-self: flex-start;
+        }
+
+        .explore-btn:hover {
+            background: #00d9ff;
+            color: black;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Custom Orders Section */
+        .custom-orders {
+            padding: 80px 40px;
+            background: rgba(17, 17, 17, 0.8);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .custom-orders h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00d9ff;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .custom-orders > p {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px 15px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 2px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #666;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.4), inset 0 0 10px rgba(0, 217, 255, 0.1);
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .submit-btn {
+            background: #00d9ff;
+            color: black;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #00b8cc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 40px;
+            background: rgba(10, 10, 10, 0.8);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #00d9ff;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #333;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
+        }
+
+        .contact-info:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        .contact-info strong {
+            color: #00d9ff;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #00d9ff;
+            color: #666;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 -2px 20px rgba(0, 217, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero {
+                padding: 80px 20px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .products,
+            .custom-orders,
+            .contact {
+                padding: 50px 20px;
+            }
+
+            .products h2,
+            .custom-orders h2,
+            .contact h2 {
+                font-size: 28px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 250px;
+            }
+        }
+
+        /* Smooth scrolling animation */
+        section {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -29,28 +570,43 @@
     <h2>Our Collections</h2>
     <div class="product-grid">
         <div class="product-card">
+            <div class="product-image">
+                <img src="images/apparel-red.jpg" alt="Red Skulls Design">
+            </div>
+            <div class="product-info">
+                <h3>Red Skulls Collection</h3>
+                <p>Gothic skull design with crimson accents. Premium quality apparel for the bold and daring.</p>
+                <button class="explore-btn">Explore</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="images/apparel-blue.jpg" alt="Blue Skulls Design">
+            </div>
+            <div class="product-info">
+                <h3>Blue Skulls Collection</h3>
+                <p>Anime-inspired design with electric blue energy. Unique character-driven artwork on premium fabric.</p>
+                <button class="explore-btn">Explore</button>
+            </div>
+        </div>
+
+        <div class="product-card">
             <div class="product-image">3D Prints</div>
-            <h3>3D Prints</h3>
-            <p>Custom 3D printed designs tailored to your specifications</p>
-            <button class="explore-btn">Explore</button>
+            <div class="product-info">
+                <h3>3D Prints</h3>
+                <p>Custom 3D printed designs tailored to your specifications</p>
+                <button class="explore-btn">Explore</button>
+            </div>
         </div>
-        <div class="product-card">
-            <div class="product-image">Apparel</div>
-            <h3>Apparel</h3>
-            <p>Premium quality printed clothing with unique designs</p>
-            <button class="explore-btn">Explore</button>
-        </div>
-        <div class="product-card">
-            <div class="product-image">Accessories</div>
-            <h3>Household Accessories</h3>
-            <p>Functional and stylish items for your home</p>
-            <button class="explore-btn">Explore</button>
-        </div>
+
         <div class="product-card">
             <div class="product-image">Essentials</div>
-            <h3>Everyday Essentials</h3>
-            <p>Daily-use items designed with care and quality</p>
-            <button class="explore-btn">Explore</button>
+            <div class="product-info">
+                <h3>Household Accessories</h3>
+                <p>Functional and stylish items for your home</p>
+                <button class="explore-btn">Explore</button>
+            </div>
         </div>
     </div>
 </section>
@@ -79,7 +635,47 @@
     <p>&copy; 2025 Cook's Limitless Layers. All rights reserved.</p>
 </footer>
 
-<script src="script.js"></script>
+<script>
+    // Shop Now Button Click Handler
+    const ctaButton = document.querySelector(".cta-button");
+    ctaButton.addEventListener("click", () => {
+        alert("Welcome to Cook's Limitless Layers! Shop coming soon.");
+    });
+
+    // Explore Buttons
+    const exploreButtons = document.querySelectorAll(".explore-btn");
+    exploreButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            const categories = ["Red Skulls", "Blue Skulls", "3D Prints", "Accessories"];
+            alert(`Viewing ${categories[index]} collection...`);
+        });
+    });
+
+    // Form Submission
+    const contactForm = document.querySelector(".contact-form");
+    if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Thank you for your inquiry! We'll get back to you soon.");
+            contactForm.reset();
+        });
+    }
+
+    // Smooth Scrolling for Navigation Links
+    const navLinks = document.querySelectorAll("nav a");
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    });
+
+    console.log("Cook's Limitless Layers website loaded successfully!");
+</script>
 
 </body>
 </html>
