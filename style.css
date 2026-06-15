@@ -6,10 +6,26 @@
 }
 
 body {
-    background: #050505;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect fill="%23050505" width="1200" height="800"/><circle cx="300" cy="200" r="150" fill="%230099cc" opacity="0.3" filter="url(%23glow)"/><circle cx="900" cy="200" r="120" fill="%230099cc" opacity="0.25" filter="url(%23glow)"/></svg>');
+    background-attachment: fixed;
     color: white;
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(0, 153, 204, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(0, 153, 204, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* Header & Navigation */
@@ -51,8 +67,10 @@ nav a:hover {
 .hero {
     text-align: center;
     padding: 120px 20px;
-    background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+    background: linear-gradient(135deg, rgba(17, 17, 17, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%), 
+                radial-gradient(circle at 50% 50%, rgba(0, 153, 204, 0.2) 0%, transparent 70%);
     border-bottom: 2px solid #00d9ff;
+    position: relative;
 }
 
 .hero h2 {
@@ -60,6 +78,7 @@ nav a:hover {
     margin-bottom: 20px;
     color: #00d9ff;
     font-weight: bold;
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
 }
 
 .hero p {
@@ -79,18 +98,20 @@ nav a:hover {
     font-weight: bold;
     font-size: 16px;
     transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
 }
 
 .cta-button:hover {
     background: #00b8cc;
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.3);
+    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.5);
 }
 
 /* Products Section */
 .products {
     padding: 80px 40px;
-    background: #0a0a0a;
+    background: rgba(10, 10, 10, 0.95);
+    position: relative;
 }
 
 .products h2 {
@@ -98,6 +119,7 @@ nav a:hover {
     font-size: 36px;
     margin-bottom: 50px;
     color: #00d9ff;
+    text-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .product-grid {
@@ -109,18 +131,19 @@ nav a:hover {
 }
 
 .product-card {
-    background: #1a1a1a;
+    background: rgba(26, 26, 26, 0.9);
     border: 2px solid #333;
     border-radius: 10px;
     padding: 30px;
     text-align: center;
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
 .product-card:hover {
     border-color: #00d9ff;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
 }
 
 .product-image {
@@ -131,6 +154,7 @@ nav a:hover {
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 18px;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
 }
 
 .product-card h3 {
@@ -158,19 +182,22 @@ nav a:hover {
 .explore-btn:hover {
     background: #00d9ff;
     color: black;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
 }
 
 /* Custom Orders Section */
 .custom-orders {
     padding: 80px 40px;
-    background: #111;
+    background: rgba(17, 17, 17, 0.95);
     text-align: center;
+    position: relative;
 }
 
 .custom-orders h2 {
     font-size: 36px;
     margin-bottom: 20px;
     color: #00d9ff;
+    text-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .custom-orders > p {
@@ -190,13 +217,14 @@ nav a:hover {
 .contact-form input,
 .contact-form textarea {
     padding: 12px 15px;
-    background: #1a1a1a;
+    background: rgba(26, 26, 26, 0.8);
     border: 2px solid #333;
     border-radius: 5px;
     color: white;
     font-family: Arial, sans-serif;
     font-size: 14px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
 .contact-form input::placeholder,
@@ -208,7 +236,7 @@ nav a:hover {
 .contact-form textarea:focus {
     outline: none;
     border-color: #00d9ff;
-    box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
 }
 
 .submit-btn {
@@ -221,24 +249,28 @@ nav a:hover {
     font-weight: bold;
     font-size: 16px;
     transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .submit-btn:hover {
     background: #00b8cc;
     transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
 }
 
 /* Contact Section */
 .contact {
     padding: 80px 40px;
-    background: #0a0a0a;
+    background: rgba(10, 10, 10, 0.95);
     text-align: center;
+    position: relative;
 }
 
 .contact h2 {
     font-size: 36px;
     margin-bottom: 40px;
     color: #00d9ff;
+    text-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
 }
 
 .contact-info {
@@ -247,6 +279,11 @@ nav a:hover {
     gap: 15px;
     max-width: 600px;
     margin: 0 auto;
+    background: rgba(26, 26, 26, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #333;
+    backdrop-filter: blur(10px);
 }
 
 .contact-info p {
